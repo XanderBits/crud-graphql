@@ -1,0 +1,16 @@
+version: '3'
+ 
+services:
+  db:
+    image: postgres:14.3
+    restart: on-failure
+    ports:
+      - "6432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}      
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    container_name: graphdb
+    volumes:
+      - ./postgres_data:/var/lib/postgresql

@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Role {
+  id: Float!
+  name: String!
+}
+
+type Project {
+  name: String!
+  description: String!
+  status: String!
+}
+
+type Developer {
+  id: Float!
+  name: String!
+  email: String!
+}
+
+type Query {
+  projects: [Project!]!
+  project(id: Int!): Project!
+  developers: [Developer!]!
+  developer(id: Int!): Developer!
+  roles: [Role!]!
+  role(id: Int!): Role!
+}
+
+type Mutation {
+  createProject(createProjectInput: CreateProjectInput!): Project!
+  updateProject(updateProjectInput: UpdateProjectInput!): Project!
+  removeProject(id: Int!): Project!
+  createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
+  updateDeveloper(updateDeveloperInput: UpdateDeveloperInput!): Developer!
+  removeDeveloper(id: Int!): Developer!
+  createRole(name: CreateRoleInput!): Role!
+  removeRole(id: Int!): Role!
+}
+
+input CreateProjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateProjectInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateDeveloperInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateDeveloperInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateRoleInput {
+  name: String!
+}
