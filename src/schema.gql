@@ -2,21 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Role {
-  id: Float!
-  name: String!
-  projects: [Project!]!
-  developers: [Developer!]!
-}
-
-type Developer {
-  id: Float!
-  name: String!
-  email: String!
-  projects: [Project!]!
-  roles: [Role!]!
-}
-
 type Project {
   name: String!
   description: String!
@@ -32,32 +17,48 @@ enum AllowedStatus {
   COMPLETED
 }
 
+type Developer {
+  id: Float!
+  name: String!
+  email: String!
+  projects: [Project!]!
+  roles: [Role!]!
+}
+
+type Role {
+  id: Float!
+  name: String!
+  projects: [Project!]!
+  developers: [Developer!]!
+}
+
 type Query {
   projects: [Project!]!
   project(id: Int!): Project!
-  developers: [Developer!]!
-  developer(id: Int!): Developer!
   roles: [Role!]!
   role(id: Int!): Role!
+  developers: [Developer!]!
+  developer(id: Int!): Developer!
 }
 
 type Mutation {
   createProject(createProjectInput: CreateProjectInput!): Project!
-  createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
   createRole(name: CreateRoleInput!): Role!
+  createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
 }
 
 input CreateProjectInput {
   name: String!
   description: String!
   status: Float!
+  roles: [Float!]!
+}
+
+input CreateRoleInput {
+  name: String!
 }
 
 input CreateDeveloperInput {
   """Example field (placeholder)"""
   exampleField: Int!
-}
-
-input CreateRoleInput {
-  name: String!
 }

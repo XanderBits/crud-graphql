@@ -17,7 +17,7 @@ export class Role {
  
   @Field(() => [Project])
   @ManyToMany (() => Project, project => project.roles)
-     projects: Project[]
+  projects: Project[]
 
   @Field(() => [Developer])
   @ManyToMany (() => Developer, developer => developer.roles)

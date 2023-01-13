@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-/*import { AppController } from './app.controller';
-import { AppService } from './app.service';*/
 import { ConfigModule } from '@nestjs/config';  
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectsModule } from './projects/projects.module';
@@ -27,7 +25,5 @@ import { join } from 'path';
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql')
   }), ProjectsModule, DevelopersModule, RolesModule],
-  /*controllers: [AppController],
-  providers: [AppService],*/
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import {IsEnum, IsIn, IsString, MinLength } from 'class-validator';
+import {IsEnum, IsString, MinLength } from 'class-validator';
 import { Role } from 'src/roles/entities/role.entity';
 import { AllowedStatus } from '../project.status.enum';
 
@@ -18,5 +18,7 @@ export class CreateProjectInput {
   @Field()
   @IsEnum(AllowedStatus)
   status: AllowedStatus
-
+  
+  @Field(() => [Number])
+  roles: number[]
 }

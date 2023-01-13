@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import { In, Repository } from 'typeorm';
 import { CreateProjectInput } from './dto/create-project.input';
 import { Project } from './entities/project.entity';
 
@@ -8,12 +9,16 @@ import { Project } from './entities/project.entity';
 export class ProjectsService {
   constructor(
     @InjectRepository(Project)
-      private readonly projectRepository: Repository<Project>,
-
+    private projectRepository: Repository<Project>,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>
   ) {}
   async create(createProjectInput: CreateProjectInput) {
     try {
-      const project = this.projectRepository.create(createProjectInput);
+     let { roles = [], ...createProjectDetails} = createProjectInput
+      const project = this.projectRepository.create(createProjectDetails);
+      const findRoleIds = await this.roleRepository.findBy({ id: In(roles) })
+      project.roles = findRoleIds
       await this.projectRepository.save( project );
       return project; 
 

@@ -8,7 +8,7 @@ export class ProjectsResolver {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Mutation(() => Project)
-  createProject(@Args('createProjectInput') createProjectInput: CreateProjectInput) {
+  async createProject(@Args('createProjectInput') createProjectInput: CreateProjectInput) {
     return this.projectsService.create(createProjectInput);
   }
 
