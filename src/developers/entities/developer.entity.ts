@@ -19,11 +19,13 @@ export class Developer {
   @Column('char')
   email: string;
 
-  @ManyToMany(type => Project)
-    @JoinTable()
-    Projects: Project[]
+  @Field(() => [Project])
+  @ManyToMany (() => Project, project => project.developers)
+  @JoinTable()
+  projects: Project[]
 
-    @ManyToMany(type => Role)
-    @JoinTable()
-    Roles: Role[]
+  @Field(() => [Role])
+  @ManyToMany (() => Role, role => role.developers)
+  @JoinTable()
+  roles: Role[]
 }

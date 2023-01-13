@@ -1,25 +1,33 @@
 import { Field, ObjectType } from '@nestjs/graphql/dist/decorators';
+import { Developer } from 'src/developers/entities/developer.entity';
 import { Role } from 'src/roles/entities/role.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { AllowedStatus } from '../project.status.enum';
 
 @Entity()
 @ObjectType()
 export class Project {
- @PrimaryGeneratedColumn('increment')
- id: number;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
- @Field()
- @Column('char', {unique: true})
- name: string;
+    @Field()
+    @Column('char', {unique: true})
+    name: string;
 
- @Field()
- @Column('char')
- description: string
+    @Field()
+    @Column('char')
+    description: string
 
- @Field()
- @Column('text')
- status: string
+    @Field(type => AllowedStatus)
+    @Column()
+    status: AllowedStatus
 
- @ManyToOne(type => Role, (role) => role.projects)
- role: Role
+    @Field(() => [Developer])
+    @ManyToMany(() => Developer, developer => developer.projects)
+    developers: Developer[]
+
+    @Field(() => [Role])
+    @ManyToMany (() => Role, role => role.projects)
+    @JoinTable()
+    roles: Role[]
 }

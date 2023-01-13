@@ -5,12 +5,14 @@
 type Role {
   id: Float!
   name: String!
+  projects: [Project!]!
 }
 
 type Project {
   name: String!
   description: String!
   status: String!
+  roles: [Role!]!
 }
 
 type Developer {
@@ -30,35 +32,19 @@ type Query {
 
 type Mutation {
   createProject(createProjectInput: CreateProjectInput!): Project!
-  updateProject(updateProjectInput: UpdateProjectInput!): Project!
-  removeProject(id: Int!): Project!
   createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
-  updateDeveloper(updateDeveloperInput: UpdateDeveloperInput!): Developer!
-  removeDeveloper(id: Int!): Developer!
   createRole(name: CreateRoleInput!): Role!
-  removeRole(id: Int!): Role!
 }
 
 input CreateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateProjectInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String!
+  description: String!
+  status: String!
 }
 
 input CreateDeveloperInput {
   """Example field (placeholder)"""
   exampleField: Int!
-}
-
-input UpdateDeveloperInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input CreateRoleInput {

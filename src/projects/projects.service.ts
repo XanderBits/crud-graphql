@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateProjectInput } from './dto/create-project.input';
-import { UpdateProjectInput } from './dto/update-project.input';
+import { Project } from './entities/project.entity';
 
 @Injectable()
 export class ProjectsService {
-  create(createProjectInput: CreateProjectInput) {
-    return 'This action adds a new project';
-  }
+  constructor(
+    @InjectRepository(Project)
+      private readonly projectRepository: Repository<Project>,
 
+  ) {}
+  async create(createProjectInput: CreateProjectInput) {
+    try {
+      const project = this.projectRepository.create(createProjectInput);
+      await this.projectRepository.save( project );
+      return project; 
+
+    }catch(error){
+      throw new BadRequestException(error.detail)
+    }
+  }
   findAll() {
     return `This action returns all projects`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} project`;
-  }
-
-  update(id: number, updateProjectInput: UpdateProjectInput) {
-    return `This action updates a #${id} project`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} project`;
   }
 }
