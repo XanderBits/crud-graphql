@@ -6,19 +6,30 @@ type Role {
   id: Float!
   name: String!
   projects: [Project!]!
-}
-
-type Project {
-  name: String!
-  description: String!
-  status: String!
-  roles: [Role!]!
+  developers: [Developer!]!
 }
 
 type Developer {
   id: Float!
   name: String!
   email: String!
+  projects: [Project!]!
+  roles: [Role!]!
+}
+
+type Project {
+  name: String!
+  description: String!
+  status: AllowedStatus!
+  developers: [Developer!]!
+  roles: [Role!]!
+}
+
+"""The supported status"""
+enum AllowedStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
 }
 
 type Query {
@@ -39,7 +50,7 @@ type Mutation {
 input CreateProjectInput {
   name: String!
   description: String!
-  status: String!
+  status: Float!
 }
 
 input CreateDeveloperInput {
