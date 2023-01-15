@@ -15,7 +15,6 @@ export class RolesService {
       const role = this.roleRepository.create(createRoleInput);
       await this.roleRepository.save( role );
       return role;
-
     }catch(error){
       throw new BadRequestException(error.detail)
     }

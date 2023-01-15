@@ -1,3 +1,4 @@
+import { Int } from '@nestjs/graphql';
 import { Field, ObjectType } from '@nestjs/graphql/dist/decorators';
 import { Developer } from 'src/developers/entities/developer.entity';
 import { Role } from 'src/roles/entities/role.entity';
@@ -7,6 +8,7 @@ import { AllowedStatus } from '../project.status.enum';
 @Entity()
 @ObjectType()
 export class Project {
+    @Field(() => Int, { nullable: true })
     @PrimaryGeneratedColumn('increment')
     id: number;
 
@@ -19,15 +21,23 @@ export class Project {
     description: string
 
     @Field(type => AllowedStatus)
-    @Column()
+    @Column('text')
     status: AllowedStatus
 
-    @Field(() => [Developer])
     @ManyToMany(() => Developer, developer => developer.projects)
+    @Field(() => [Developer])
     developers: Developer[]
 
-    @Field(() => [Role])
     @ManyToMany (() => Role, role => role.projects)
-    @JoinTable()
+    @Field(() => [Role], { nullable: true })
+    @JoinTable({ 
+        joinColumn: {
+        name: 'project_id',
+        referencedColumnName: 'id',
+      },
+      inverseJoinColumn: {
+        name: 'role_id',
+        referencedColumnName: 'id',
+      },})
     roles: Role[]
 }

@@ -1,3 +1,4 @@
+import { Int } from '@nestjs/graphql';
 import { Field, ObjectType } from '@nestjs/graphql/dist/decorators';
 import { Project } from 'src/projects/entities/project.entity';
 import { Role } from 'src/roles/entities/role.entity';
@@ -7,7 +8,7 @@ import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedC
 @ObjectType()
 
 export class Developer {
-  @Field()
+  @Field(() => Int, { nullable: true })
   @PrimaryGeneratedColumn('increment')
   id: number;
  
@@ -21,11 +22,27 @@ export class Developer {
 
   @Field(() => [Project])
   @ManyToMany (() => Project, project => project.developers)
-  @JoinTable()
+  @JoinTable({ 
+    joinColumn: {
+    name: 'developer_id',
+    referencedColumnName: 'id',
+  },
+  inverseJoinColumn: {
+    name: 'project_id',
+    referencedColumnName: 'id',
+  },})
   projects: Project[]
 
   @Field(() => [Role])
   @ManyToMany (() => Role, role => role.developers)
-  @JoinTable()
+  @JoinTable({ 
+    joinColumn: {
+    name: 'developer_id',
+    referencedColumnName: 'id',
+  },
+  inverseJoinColumn: {
+    name: 'role_id',
+    referencedColumnName: 'id',
+  },})
   roles: Role[]
 }

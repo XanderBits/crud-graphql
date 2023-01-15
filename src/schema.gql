@@ -3,11 +3,12 @@
 # ------------------------------------------------------
 
 type Project {
+  id: Int
   name: String!
   description: String!
   status: AllowedStatus!
   developers: [Developer!]!
-  roles: [Role!]!
+  roles: [Role!]
 }
 
 """The supported status"""
@@ -18,7 +19,7 @@ enum AllowedStatus {
 }
 
 type Developer {
-  id: Float!
+  id: Int
   name: String!
   email: String!
   projects: [Project!]!
@@ -26,9 +27,9 @@ type Developer {
 }
 
 type Role {
-  id: Float!
+  id: Int
   name: String!
-  projects: [Project!]!
+  projects: [Project!]
   developers: [Developer!]!
 }
 
