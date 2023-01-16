@@ -13,12 +13,12 @@ export class Project {
     id: number;
 
     @Field()
-    @Column('char', {unique: true})
+    @Column('char', {unique: true, length: 50})
     name: string;
 
     @Field()
-    @Column('char')
-    description: string
+    @Column('char', {length: 255}) 
+    description: string;
 
     @Field(type => AllowedStatus)
     @Column('text')

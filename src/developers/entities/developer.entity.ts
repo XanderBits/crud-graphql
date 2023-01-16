@@ -13,11 +13,11 @@ export class Developer {
   id: number;
  
   @Field()
-  @Column('char')
+  @Column('char', {length: 50})
   name: string;
 
   @Field()
-  @Column('char')
+  @Column('char', {length: 255})
   email: string;
 
   @Field(() => [Project])
