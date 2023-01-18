@@ -10,10 +10,7 @@ export class CreateDeveloperInput {
   @Field()
   @IsEmail()
   email: string
-
-  @Field(() => [Number])
-  projects: number[]
-
+  
   @Field(() => [Number])
   roles: number[]
 }
