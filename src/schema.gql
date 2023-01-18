@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Role {
+  id: Int
+  name: String!
+  projects: [Project!]
+  developers: [Developer!]!
+}
+
 type Project {
   id: Int
   name: String!
@@ -26,13 +33,6 @@ type Developer {
   roles: [Role!]
 }
 
-type Role {
-  id: Int
-  name: String!
-  projects: [Project!]
-  developers: [Developer!]!
-}
-
 type Query {
   projects: [Project!]!
   project(id: Int!): Project!
@@ -44,6 +44,7 @@ type Query {
 
 type Mutation {
   createProject(createProjectInput: CreateProjectInput!): Project!
+  addDevToProject(addDevToProject: UpdateProjectInput!): Project!
   createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
   createRole(name: CreateRoleInput!): Role!
 }
@@ -55,10 +56,14 @@ input CreateProjectInput {
   roles: [Float!]!
 }
 
+input UpdateProjectInput {
+  project: Int!
+  developer: Int!
+}
+
 input CreateDeveloperInput {
   name: String!
   email: String!
-  projects: [Float!]!
   roles: [Float!]!
 }
 
