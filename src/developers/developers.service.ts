@@ -23,10 +23,8 @@ export class DevelopersService {
       const developer = this.DevRepository.create(createDeveloperInput);
 
       const findRoleIds = await this.RoleRepository.findBy({ id: In(roles) });
-      console.log(findRoleIds)
       developer.roles = findRoleIds;
       const findProjectIds = await this.ProjectRepository.findBy({ id: In(projects) });
-      console.log(findProjectIds)
       developer.projects = findProjectIds;
       
       await this.DevRepository.save( developer );
