@@ -17,8 +17,8 @@ export class ProjectsService {
     try {
      let { roles = [], ...createProjectDetails} = createProjectInput
       const project = this.projectRepository.create(createProjectDetails);
-      const findRoleIds = await this.roleRepository.findBy({ id: In(roles) })
-      project.roles = findRoleIds
+      const findRoleIds = await this.roleRepository.findBy({ id: In(roles) });
+      project.roles = findRoleIds;
       await this.projectRepository.save( project );
       return project; 
 
