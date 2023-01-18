@@ -14,7 +14,7 @@ export class CreateProjectInput {
   @Field()
   description: string
   
-  @Field()
+  @Field(() => AllowedStatus)
   @IsEnum(AllowedStatus)
   status: AllowedStatus
   

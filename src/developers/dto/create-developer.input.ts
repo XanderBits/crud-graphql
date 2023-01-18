@@ -11,11 +11,9 @@ export class CreateDeveloperInput {
   @IsEmail()
   email: string
 
-  @Field(type => [Number])
-  @IsNotEmpty()
+  @Field(() => [Number])
   projects: number[]
 
-  @Field(type => [Number])
-  @IsNotEmpty()
+  @Field(() => [Number])
   roles: number[]
 }
