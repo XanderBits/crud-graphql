@@ -19,6 +19,6 @@ export class DevelopersResolver {
 
   @Query(() => Developer, { name: 'developer' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.developersService.findOne(id);
+    return this.developersService.findByRoleAndProyect(id);
   }
 }
