@@ -20,12 +20,12 @@ export class Project {
     @Column('char', {length: 255}) 
     description: string;
 
-    @Field(type => AllowedStatus)
+    @Field(() => AllowedStatus)
     @Column('text')
     status: AllowedStatus
 
     @ManyToMany(() => Developer, developer => developer.projects)
-    @Field(() => [Developer])
+    @Field(() => [Developer], { nullable: true })
     developers: Developer[]
 
     @ManyToMany (() => Role, role => role.projects)

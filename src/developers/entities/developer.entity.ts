@@ -17,10 +17,10 @@ export class Developer {
   name: string;
 
   @Field()
-  @Column('char', {length: 255})
+  @Column('char', {length: 255, unique: true})
   email: string;
 
-  @Field(() => [Project])
+  @Field(() => [Project], { nullable: true })
   @ManyToMany (() => Project, project => project.developers)
   @JoinTable({ 
     joinColumn: {
@@ -33,7 +33,7 @@ export class Developer {
   },})
   projects: Project[]
 
-  @Field(() => [Role])
+  @Field(() => [Role], { nullable: true })
   @ManyToMany (() => Role, role => role.developers)
   @JoinTable({ 
     joinColumn: {
