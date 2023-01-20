@@ -14,15 +14,6 @@ export class ProjectsResolver {
   }
   @Mutation(() => Project)
   async addDevToProject(@Args('addDevToProject') updateProjectInput: UpdateProjectInput){
-    return this.projectsService.addDevToProject(updateProjectInput)
-  }
-  @Query(() => [Project], { name: 'projects' })
-  findAll() {
-    return this.projectsService.findAll();
-  }
-
-  @Query(() => Project, { name: 'project' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.projectsService.findOne(id);
+    return await this.projectsService.addDevToProject(updateProjectInput)
   }
 }
