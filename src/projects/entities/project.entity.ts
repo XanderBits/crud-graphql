@@ -21,7 +21,7 @@ export class Project {
     description: string;
 
     @Field(() => AllowedStatus)
-    @Column('text')
+    @Column({type: 'enum', enum: AllowedStatus})
     status: AllowedStatus
 
     @ManyToMany(() => Developer, developer => developer.projects)

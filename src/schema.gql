@@ -34,8 +34,6 @@ type Developer {
 }
 
 type Query {
-  projects: [Project!]!
-  project(id: Int!): Project!
   developers: [Developer!]!
   developer(id: Int!): Developer!
   roles: [Role!]!
