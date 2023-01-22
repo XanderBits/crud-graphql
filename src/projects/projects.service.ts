@@ -35,23 +35,21 @@ export class ProjectsService {
       const findProject = await this.projectRepository.find({relations: { roles: true, developers: true}, 
                                                             where: {id: updateProjectInput.project}, 
                                                             })
+                                                            console.log(findProject)
       const findDev = await this.devRepository.find({relations: { roles: true}, 
                                                       where: {id: updateProjectInput.developer}, 
                                                     })                                                    
       if( findProject[0].developers.length !== 0 && findDev[0].id === findProject[0].developers[0].id) 
         throw new BadRequestException(`The developer ${findDev[0].name} 
                                       is already associated with this project`)
-      let projectRoleId: number;
-      let devRoleId: number;
-      for(let id in findProject) projectRoleId = findProject[id].roles[0]['id']
-      for(let id in findDev) devRoleId = findDev[id].roles[0]['id'];
-      if( projectRoleId !== devRoleId) throw new BadRequestException(`Developer with id: ${devRoleId}  
+      const projectRoleId: number = findProject[0].roles[0]['id']
+      const devRoleId: number = findDev[0].roles[0]['id']
+     if( projectRoleId !== devRoleId) throw new BadRequestException(`Developer with id: ${devRoleId}  
                                                                     doesn't have the same role 
                                                                     as the project ${findProject[0].name}`)
       findProject[0].developers.push(findDev[0])
       await this.projectRepository.save(findProject)
       return findProject[0]
-      
     }catch(error){ return error }
   }
 }
