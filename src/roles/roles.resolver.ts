@@ -10,14 +10,4 @@ export class RolesResolver {
   createRole(@Args('name') name: CreateRoleInput) {
     return this.rolesService.create(name);
   }
-
-  @Query(() => [Role], { name: 'roles' })
-  findAll() {
-    return this.rolesService.findAll();
-  }
-
-  @Query(() => Role, { name: 'role' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.rolesService.findOne(id);
-  }
 }

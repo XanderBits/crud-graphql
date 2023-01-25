@@ -19,12 +19,4 @@ export class RolesService {
       throw new BadRequestException(error.detail)
     }
   }
-
-  findAll() {
-    return `This action returns all roles`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
-  }
 }
