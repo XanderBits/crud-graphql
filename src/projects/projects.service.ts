@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Developer } from 'src/developers/entities/developer.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { In, Repository } from 'typeorm';
+import { ListProjectsArgs } from './dto/args/list-project.args';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
 import { Project } from './entities/project.entity';
@@ -17,7 +18,8 @@ export class ProjectsService {
     @InjectRepository(Developer)
     private devRepository: Repository<Developer>
   ) {}
-  async create(createProjectInput: CreateProjectInput) {
+
+  async create(createProjectInput: CreateProjectInput): Promise<Project>{
     try {
      let { roles = [], ...createProjectDetails} = createProjectInput
       const project = this.projectRepository.create(createProjectDetails);
@@ -30,7 +32,8 @@ export class ProjectsService {
       throw new BadRequestException(error.detail)
     }
   }
-  async addDevToProject(updateProjectInput : UpdateProjectInput){
+
+  async addDevToProject(updateProjectInput : UpdateProjectInput): Promise<Project>{
     try{
       const findProject = await this.projectRepository.find({relations: { roles: true, developers: true}, 
                                                             where: {id: updateProjectInput.project}, 
@@ -50,6 +53,19 @@ export class ProjectsService {
       findProject[0].developers.push(findDev[0])
       await this.projectRepository.save(findProject)
       return findProject[0]
+
     }catch(error){ return error }
+  }
+
+  async listProjects (listProjectArgs: ListProjectsArgs) : Promise<Project[]>{
+    if(listProjectArgs !== undefined){
+     if(listProjectArgs.hasOwnProperty('roles') && listProjectArgs.hasOwnProperty('status')){
+      console.log(2)
+     }
+     if(listProjectArgs.hasOwnProperty('roles')){}
+
+    }
+    const projects = this.projectRepository.find()
+    return projects
   }
 }

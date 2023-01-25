@@ -34,6 +34,10 @@ type Developer {
 }
 
 type Query {
+  """
+  This query returns a list of projects that can be filtered by roles and status
+  """
+  listProjects(roles: Int, status: AllowedStatus): Project!
   developers: [Developer!]!
   developer(id: Int!): Developer!
   roles: [Role!]!

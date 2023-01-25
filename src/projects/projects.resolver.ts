@@ -3,6 +3,7 @@ import { ProjectsService } from './projects.service';
 import { Project } from './entities/project.entity';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
+import { ListProjectsArgs } from './dto/args/list-project.args';
 
 @Resolver(() => Project)
 export class ProjectsResolver {
@@ -15,5 +16,9 @@ export class ProjectsResolver {
   @Mutation(() => Project)
   async addDevToProject(@Args('addDevToProject') updateProjectInput: UpdateProjectInput){
     return await this.projectsService.addDevToProject(updateProjectInput)
+  }
+  @Query(() => Project, {name: "listProjects", description: "This query returns a list of projects that can be filtered by roles and status"})
+  async listProjects( @Args({nullable: true}) listProjectArgs : ListProjectsArgs ){
+    return await this.projectsService.listProjects( listProjectArgs );
   }
 }
