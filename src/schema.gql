@@ -37,16 +37,17 @@ type Query {
   """
   This query returns a list of projects that can be filtered by roles and status
   """
-  listProjects(roles: Int, status: AllowedStatus): Project!
-  developers: [Developer!]!
-  developer(id: Int!): Developer!
-  roles: [Role!]!
-  role(id: Int!): Role!
+  listProjects(roles: Int, status: AllowedStatus): [Project!]!
+
+  """
+  This query returns a list of developers that can be filtered by roles and project
+  """
+  listDevelopers(roles: Int, projects: Int): [Developer!]!
 }
 
 type Mutation {
   createProject(createProjectInput: CreateProjectInput!): Project!
-  addDevToProject(addDevToProject: UpdateProjectInput!): Project!
+  addDevToProject(addDevToProject: UpdateProjectInput!): [Project!]!
   createDeveloper(createDeveloperInput: CreateDeveloperInput!): Developer!
   createRole(name: CreateRoleInput!): Role!
 }
