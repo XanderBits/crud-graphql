@@ -7,6 +7,14 @@
 ```bash
 $ yarn install
 ```
+# Database  
+1. Clone file ```.env.template``` and rename to ```.env```
+2. Change env variables
+3. 
+```
+docker-compose up -d
+```
+4.  ```yarn start:dev```
 
 ## Running the app
 
@@ -21,11 +29,14 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-# Database  
-1. Clone file ```.env.template``` and rename to ```.env```
-2. Change env variables
-3. 
-```
-docker-compose up -d
-```
-4.  ```yarn start:dev```
+# Access to the aplication:
+
+* http://localhost:3000/
+
+# Database Diagram
+![alt text][logic]
+
+[logic]: /database-diagram.png
+
+
+
