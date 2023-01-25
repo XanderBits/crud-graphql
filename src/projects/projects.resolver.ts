@@ -13,12 +13,12 @@ export class ProjectsResolver {
   async createProject(@Args('createProjectInput') createProjectInput: CreateProjectInput) {
     return this.projectsService.create(createProjectInput);
   }
-  @Mutation(() => Project)
+  @Mutation(() => [Project])
   async addDevToProject(@Args('addDevToProject') updateProjectInput: UpdateProjectInput){
     return await this.projectsService.addDevToProject(updateProjectInput)
   }
-  @Query(() => Project, {name: "listProjects", description: "This query returns a list of projects that can be filtered by roles and status"})
-  async listProjects( @Args({nullable: true}) listProjectArgs : ListProjectsArgs ){
+  @Query(() => [Project], {name: "listProjects", description: "This query returns a list of projects that can be filtered by roles and status"})
+  async listProjects( @Args({nullable: true}) listProjectArgs : ListProjectsArgs ) : Promise<Project[]>{
     return await this.projectsService.listProjects( listProjectArgs );
   }
 }

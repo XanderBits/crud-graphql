@@ -33,18 +33,21 @@ export class ProjectsService {
     }
   }
 
-  async addDevToProject(updateProjectInput : UpdateProjectInput): Promise<Project>{
+  async addDevToProject(updateProjectInput : UpdateProjectInput): Promise<Project[]>{
     try{
+      
       const findProject = await this.projectRepository.find({relations: { roles: true, developers: true}, 
                                                             where: {id: updateProjectInput.project}, 
                                                             })
                                                             console.log(findProject)
       const findDev = await this.devRepository.find({relations: { roles: true}, 
                                                       where: {id: updateProjectInput.developer}, 
-                                                    })                                                    
+                                                    })    
+      //Checks if the project has developers, and if the developer entered by the user is not already associated with the project.                                                
       if( findProject[0].developers.length !== 0 && findDev[0].id === findProject[0].developers[0].id) 
         throw new BadRequestException(`The developer ${findDev[0].name} 
                                       is already associated with this project`)
+                                      
       const projectRoleId: number = findProject[0].roles[0]['id']
       const devRoleId: number = findDev[0].roles[0]['id']
      if( projectRoleId !== devRoleId) throw new BadRequestException(`Developer with id: ${devRoleId}  
@@ -52,20 +55,39 @@ export class ProjectsService {
                                                                     as the project ${findProject[0].name}`)
       findProject[0].developers.push(findDev[0])
       await this.projectRepository.save(findProject)
-      return findProject[0]
+      return findProject
 
     }catch(error){ return error }
   }
 
   async listProjects (listProjectArgs: ListProjectsArgs) : Promise<Project[]>{
-    if(listProjectArgs !== undefined){
-     if(listProjectArgs.hasOwnProperty('roles') && listProjectArgs.hasOwnProperty('status')){
-      console.log(2)
-     }
-     if(listProjectArgs.hasOwnProperty('roles')){}
-
+    try{
+      // If Args Object is not empty
+      if( Object.keys(listProjectArgs).length !== 0 ){
+        if(listProjectArgs.hasOwnProperty('roles') && listProjectArgs.hasOwnProperty('status')){
+          const projects = await this.projectRepository.find({
+            relations: {roles: true},
+            where: {
+              roles: {
+                id: listProjectArgs.roles
+              },
+              status: listProjectArgs.status
+            },
+          })
+        return projects;
+        }
+      // List All projects that have the same role 
+      if(listProjectArgs.hasOwnProperty('roles')){
+        const projectsByRole = await this.projectRepository.find({ relations: { roles: true }, where: { roles: { id: listProjectArgs.roles } }, })
+        return projectsByRole
+      }
+      // List All projects that have the same status
+      const projectsByStatus = await this.projectRepository.find({ relations: { roles: true }, where: { status: listProjectArgs.status } })
+      return projectsByStatus
     }
-    const projects = this.projectRepository.find()
-    return projects
+    //Return all projects if ArgsObject is empty
+      const allProjects = await this.projectRepository.find()
+      return allProjects
+    }catch(error){ return error}
   }
 }
